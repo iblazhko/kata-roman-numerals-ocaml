@@ -1,0 +1,13 @@
+# VisualStudio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OCaml
+/_opam/
+/_build/
+
+# Other
+.DS_Store
