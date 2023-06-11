@@ -15,6 +15,10 @@ let test_literal_V () =
 let test_repeating_literals_II () =
   Alcotest.(check string) "2 translates to II" "II" (SUT.romanize 2)
 
+(* subtractive pattern *)
+let test_subtractive_pattern_IV () =
+  Alcotest.(check string) "4 translates to IV" "IV" (SUT.romanize 4)
+
 (* Tests Runner *)
 let () =
   let open Alcotest in
@@ -27,4 +31,6 @@ let () =
         ] );
       ( "Repeating literals",
         [ test_case "2 -> II" `Quick test_repeating_literals_II ] );
+      ( "Subtractive pattern",
+        [ test_case "4 -> IV" `Quick test_subtractive_pattern_IV ] );
     ]
