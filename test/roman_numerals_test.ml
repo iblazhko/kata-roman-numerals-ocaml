@@ -6,10 +6,17 @@ end
 let test_literal_I () =
   Alcotest.(check string) "1 translates to I" "I" (SUT.romanize 1)
 
+let test_literal_V () =
+  Alcotest.(check string) "5 translates to V" "V" (SUT.romanize 5)
+
 (* Tests Runner *)
 let () =
   let open Alcotest in
-  run "Roman Numerals" [
-      "Single letter literals",
-          [ test_case "I" `Quick test_literal_I ];
+  run "Roman Numerals"
+    [
+      ( "Single letter literals",
+        [
+          test_case "I" `Quick test_literal_I;
+          test_case "V" `Quick test_literal_V;
+        ] );
     ]
