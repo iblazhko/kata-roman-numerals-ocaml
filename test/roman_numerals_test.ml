@@ -6,33 +6,33 @@ end
 
 (* basic numerals *)
 let test_numeral_I () =
-  Alcotest.(check string) "1 translates to I" "I" (SUT.romanize 1)
+  SUT.romanize 1 |> Alcotest.(check string) "1 translates to I" "I"
 
 let test_numeral_V () =
-  Alcotest.(check string) "5 translates to V" "V" (SUT.romanize 5)
+  SUT.romanize 5 |> Alcotest.(check string) "5 translates to V" "V"
 
 let test_numeral_X () =
-  Alcotest.(check string) "10 translates to X" "X" (SUT.romanize 10)
+  SUT.romanize 10 |> Alcotest.(check string) "10 translates to X" "X"
 
 let test_numeral_L () =
-  Alcotest.(check string) "50 translates to L" "L" (SUT.romanize 50)
+  SUT.romanize 50 |> Alcotest.(check string) "50 translates to L" "L"
 
 let test_numeral_C () =
-  Alcotest.(check string) "100 translates to C" "C" (SUT.romanize 100)
+  SUT.romanize 100 |> Alcotest.(check string) "100 translates to C" "C"
 
 let test_numeral_D () =
-  Alcotest.(check string) "500 translates to D" "D" (SUT.romanize 500)
+  SUT.romanize 500 |> Alcotest.(check string) "500 translates to D" "D"
 
 let test_numeral_M () =
-  Alcotest.(check string) "1000 translates to M" "M" (SUT.romanize 1000)
+  SUT.romanize 1000 |> Alcotest.(check string) "1000 translates to M" "M"
 
 (* repeating literals *)
 let test_repeating_numerals_II () =
-  Alcotest.(check string) "2 translates to II" "II" (SUT.romanize 2)
+  SUT.romanize 2 |> Alcotest.(check string) "2 translates to II" "II"
 
 (* subtractive pattern *)
 let test_subtractive_pattern_IV () =
-  Alcotest.(check string) "4 translates to IV" "IV" (SUT.romanize 4)
+  SUT.romanize 4 |> Alcotest.(check string) "4 translates to IV" "IV"
 
 (* Tests Runner *)
 let () =
