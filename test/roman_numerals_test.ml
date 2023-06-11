@@ -34,6 +34,23 @@ let test_repeating_numerals_II () =
 let test_subtractive_pattern_IV () =
   SUT.romanize 4 |> Alcotest.(check string) "4 translates to IV" "IV"
 
+(* out of range input *)
+let test_negative_number () =
+  Alcotest.check_raises "Negative numbers should be rejected"
+    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
+      SUT.romanize (-1) |> ignore);
+  Alcotest.check_raises "Negative numbers should be rejected"
+    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
+      SUT.romanize (-2) |> ignore)
+
+let test_number_over_4000 () =
+  Alcotest.check_raises "Numbers over 4000 should be rejected"
+    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
+      SUT.romanize 4001 |> ignore);
+  Alcotest.check_raises "Numbers over 4000 should be rejected"
+    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
+      SUT.romanize 4010 |> ignore)
+
 (* Tests Runner *)
 let () =
   let open Alcotest in
@@ -53,4 +70,9 @@ let () =
         [ test_case "2 -> II" `Quick test_repeating_numerals_II ] );
       ( "Subtractive pattern",
         [ test_case "4 -> IV" `Quick test_subtractive_pattern_IV ] );
+      ( "Out of range input",
+        [
+          test_case "< 0" `Quick test_negative_number;
+          test_case "> 4000" `Quick test_number_over_4000;
+        ] );
     ]
