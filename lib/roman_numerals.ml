@@ -9,6 +9,9 @@ let roman_buckets =
     { size = 100; numerals = "C" };
     { size = 500; numerals = "D" };
     { size = 1000; numerals = "M" };
+    (* given the small number of cases for subtractive pattern,
+       we define them here explicitly rather than algorithmically
+       deriving "1<x> less than 5<x>"/"1<x> less than 10<x>" *)
     { size = 4; numerals = "IV" };
     { size = 9; numerals = "IX" };
     { size = 40; numerals = "XL" };

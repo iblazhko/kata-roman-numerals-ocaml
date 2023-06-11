@@ -1,78 +1,92 @@
 module SUT = struct
   let romanize = Roman_numerals.romanize
+  let outOfRange = Roman_numerals.OutOfRange "Input is out of [0..4000] range"
 end
 
-(* Tests *)
+(* Composing Alcotest `test_case`s *)
 
-(* basic numerals *)
-let test_numeral_I () =
-  SUT.romanize 1 |> Alcotest.(check string) "1 translates to I" "I"
+let compose_outofrange_cases data =
+  data
+  |> List.map (fun x ->
+         let case_name, number = x in
+         Alcotest.test_case (Printf.sprintf "%d: %s" number case_name) `Quick
+           (fun _ ->
+             Alcotest.check_raises
+               (Printf.sprintf "Out of range input: %d: %s" number case_name)
+               SUT.outOfRange (fun () -> SUT.romanize number |> ignore)))
 
-let test_numeral_V () =
-  SUT.romanize 5 |> Alcotest.(check string) "5 translates to V" "V"
+let compose_test_cases data =
+  data
+  |> List.map (fun x ->
+         let d, r = x in
+         Alcotest.test_case (Printf.sprintf "%d -> %s" d r) `Quick (fun _ ->
+             SUT.romanize d
+             |> Alcotest.(check string)
+                  (Printf.sprintf "%d translates to %s" d r)
+                  r))
 
-let test_numeral_X () =
-  SUT.romanize 10 |> Alcotest.(check string) "10 translates to X" "X"
+(* Test cases grouped by category *)
 
-let test_numeral_L () =
-  SUT.romanize 50 |> Alcotest.(check string) "50 translates to L" "L"
+let test_cases_single_symbol () =
+  ( "Single symbol",
+    [
+      (1, "I");
+      (5, "V");
+      (10, "X");
+      (50, "L");
+      (100, "C");
+      (500, "D");
+      (1000, "M");
+    ]
+    |> compose_test_cases )
 
-let test_numeral_C () =
-  SUT.romanize 100 |> Alcotest.(check string) "100 translates to C" "C"
+let test_cases_repeating_symbol () =
+  ( "Repeating symbol",
+    [
+      (2, "II");
+      (3, "III");
+      (20, "XX");
+      (30, "XXX");
+      (200, "CC");
+      (300, "CCC");
+      (2000, "MM");
+      (3000, "MMM");
+    ]
+    |> compose_test_cases )
 
-let test_numeral_D () =
-  SUT.romanize 500 |> Alcotest.(check string) "500 translates to D" "D"
+let test_cases_subtractive_pattern () =
+  ( "Subtractive pattern",
+    [ (4, "IV"); (9, "IX"); (40, "XL"); (90, "XC"); (400, "CD"); (900, "CM") ]
+    |> compose_test_cases )
 
-let test_numeral_M () =
-  SUT.romanize 1000 |> Alcotest.(check string) "1000 translates to M" "M"
+let test_cases_additive_pattern () =
+  ( "Additive pattern",
+    [
+      (39, "XXXIX");
+      (207, "CCVII");
+      (246, "CCXLVI");
+      (1066, "MLXVI");
+      (1776, "MDCCLXXVI");
+      (1873, "MDCCCLXXIII");
+      (1984, "MCMLXXXIV");
+      (2018, "MMXVIII");
+      (2023, "MMXXIII");
+    ]
+    |> compose_test_cases )
 
-(* repeating literals *)
-let test_repeating_numerals_II () =
-  SUT.romanize 2 |> Alcotest.(check string) "2 translates to II" "II"
-
-(* subtractive pattern *)
-let test_subtractive_pattern_IV () =
-  SUT.romanize 4 |> Alcotest.(check string) "4 translates to IV" "IV"
-
-(* out of range input *)
-let test_negative_number () =
-  Alcotest.check_raises "Negative numbers should be rejected"
-    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
-      SUT.romanize (-1) |> ignore);
-  Alcotest.check_raises "Negative numbers should be rejected"
-    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
-      SUT.romanize (-2) |> ignore)
-
-let test_number_over_4000 () =
-  Alcotest.check_raises "Numbers over 4000 should be rejected"
-    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
-      SUT.romanize 4001 |> ignore);
-  Alcotest.check_raises "Numbers over 4000 should be rejected"
-    (Roman_numerals.OutOfRange "Input is out of [0..4000] range") (fun () ->
-      SUT.romanize 4010 |> ignore)
+let test_cases_out_of_range_input () =
+  ( "Out of range input",
+    [ ("< 0", -1); ("< 0", -5); ("> 4000", 4001); ("> 4000", 4010) ]
+    |> compose_outofrange_cases )
 
 (* Tests Runner *)
 let () =
   let open Alcotest in
   run "Roman Numerals"
     [
-      ( "Single letter numerals",
-        [
-          test_case "1    -> I" `Quick test_numeral_I;
-          test_case "5    -> V" `Quick test_numeral_V;
-          test_case "10   -> X" `Quick test_numeral_X;
-          test_case "50   -> L" `Quick test_numeral_L;
-          test_case "100  -> C" `Quick test_numeral_C;
-          test_case "500  -> D" `Quick test_numeral_D;
-          test_case "1000 -> M" `Quick test_numeral_M;
-        ] );
-      ( "Repeating numerals",
-        [ test_case "2 -> II" `Quick test_repeating_numerals_II ] );
-      ( "Subtractive pattern",
-        [ test_case "4 -> IV" `Quick test_subtractive_pattern_IV ] );
-      ( "Out of range input",
-        [
-          test_case "< 0" `Quick test_negative_number;
-          test_case "> 4000" `Quick test_number_over_4000;
-        ] );
+      test_cases_single_symbol ();
+      test_cases_repeating_symbol ();
+      test_cases_subtractive_pattern ();
+      test_cases_additive_pattern ();
+      test_cases_out_of_range_input ();
     ]
