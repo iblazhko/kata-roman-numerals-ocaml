@@ -16,7 +16,7 @@ let () =
     [
       ( "Single letter literals",
         [
-          test_case "I" `Quick test_literal_I;
-          test_case "V" `Quick test_literal_V;
+          test_case "1 -> I" `Quick test_literal_I;
+          test_case "5 -> V" `Quick test_literal_V;
         ] );
     ]
