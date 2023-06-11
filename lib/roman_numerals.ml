@@ -29,4 +29,8 @@ let rec append_bucket (numerals : string list) (reminder : int) =
       let b = find_largest_full_bucket n in
       append_bucket (List.append numerals [ b.numerals ]) (reminder - b.size)
 
-let romanize n = append_bucket [] n
+exception OutOfRange of string
+
+let romanize n =
+  if n < 0 || n > 4000 then raise (OutOfRange "Input is out of [0..4000] range")
+  else append_bucket [] n
