@@ -1,14 +1,15 @@
 module SUT = struct
-  let add = Roman_numerals.add
+  let romanize = Roman_numerals.romanize
 end
 
 (* Tests *)
-let test_add () =
-  Alcotest.(check int) "adds up to 42" 42 (SUT.add 1 2)
+let test_literal_I () =
+  Alcotest.(check string) "1 translates to I" "I" (SUT.romanize 1)
 
 (* Tests Runner *)
 let () =
   let open Alcotest in
   run "Roman Numerals" [
-      "test-add",   [ test_case "Add numbers"   `Slow  test_add ];
+      "Single letter literals",
+          [ test_case "I" `Quick test_literal_I ];
     ]
