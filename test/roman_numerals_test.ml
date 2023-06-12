@@ -27,7 +27,7 @@ let compose_test_cases data =
 
 (* Test cases grouped by category *)
 
-let test_cases_single_symbol () =
+let test_single_symbol () =
   ( "Single symbol",
     [
       (1, "I");
@@ -40,7 +40,7 @@ let test_cases_single_symbol () =
     ]
     |> compose_test_cases )
 
-let test_cases_repeating_symbol () =
+let test_repeating_symbol () =
   ( "Repeating symbol",
     [
       (2, "II");
@@ -54,12 +54,12 @@ let test_cases_repeating_symbol () =
     ]
     |> compose_test_cases )
 
-let test_cases_subtractive_pattern () =
+let test_subtractive_pattern () =
   ( "Subtractive pattern",
     [ (4, "IV"); (9, "IX"); (40, "XL"); (90, "XC"); (400, "CD"); (900, "CM") ]
     |> compose_test_cases )
 
-let test_cases_additive_pattern () =
+let test_additive_pattern () =
   ( "Additive pattern",
     [
       (39, "XXXIX");
@@ -74,19 +74,18 @@ let test_cases_additive_pattern () =
     ]
     |> compose_test_cases )
 
-let test_cases_out_of_range_input () =
+let test_out_of_range_input () =
   ( "Out of range input",
     [ ("< 0", -1); ("< 0", -5); ("> 4000", 4001); ("> 4000", 4010) ]
     |> compose_outofrange_cases )
 
 (* Tests Runner *)
 let () =
-  let open Alcotest in
-  run "Roman Numerals"
+  Alcotest.run "Roman Numerals"
     [
-      test_cases_single_symbol ();
-      test_cases_repeating_symbol ();
-      test_cases_subtractive_pattern ();
-      test_cases_additive_pattern ();
-      test_cases_out_of_range_input ();
+      test_single_symbol ();
+      test_repeating_symbol ();
+      test_subtractive_pattern ();
+      test_additive_pattern ();
+      test_out_of_range_input ();
     ]

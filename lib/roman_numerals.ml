@@ -25,15 +25,14 @@ let roman_buckets =
 let find_largest_full_bucket d =
   roman_buckets |> List.filter (fun b -> b.size <= d) |> List.hd
 
-let rec append_bucket (numerals : string list) (reminder : int) =
-  match (reminder <= 0, reminder) with
-  | true, _ -> numerals |> String.concat ""
-  | _, n ->
-      let b = find_largest_full_bucket n in
-      append_bucket (List.append numerals [ b.numerals ]) (reminder - b.size)
+let rec append_buckets (numerals : string list) (reminder : int) =
+  if reminder <= 0 then numerals |> String.concat ""
+  else
+    let b = find_largest_full_bucket reminder in
+    append_buckets (List.append numerals [ b.numerals ]) (reminder - b.size)
 
 exception OutOfRange of string
 
 let romanize n =
   if n < 0 || n > 4000 then raise (OutOfRange "Input is out of [0..4000] range")
-  else append_bucket [] n
+  else append_buckets [] n

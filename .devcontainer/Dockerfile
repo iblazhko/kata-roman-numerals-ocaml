@@ -1,8 +1,8 @@
-FROM ubuntu:jammy as opam-base
+FROM ubuntu:22.04 as opam-base
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt install apt-utils -y && \
-    apt install gcc build-essential curl unzip bubblewrap opam -y
+    apt-get install apt-utils -y && \
+    apt-get install gcc build-essential curl unzip bubblewrap opam -y
 
 # In case latest OPAM is needed:
 # RUN curl -fsSL -o /tmp/opam-install.sh https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh && \
