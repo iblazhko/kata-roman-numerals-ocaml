@@ -20,10 +20,10 @@ let roman_buckets =
     { size = 900; numerals = "CM" };
   ]
   (* sort in descending size order *)
-  |> List.sort (fun x y -> y.size - x.size)
+  |> List.sort (fun x y -> Int.compare y.size x.size)
 
 let find_largest_full_bucket d =
-  roman_buckets |> List.filter (fun b -> b.size <= d) |> List.hd
+  roman_buckets |> List.find (fun b -> b.size <= d)
 
 let rec append_buckets (numerals : string list) (reminder : int) =
   if reminder <= 0 then numerals |> String.concat ""
