@@ -17,10 +17,7 @@ are based on seven symbols:
 - `D` : 500
 - `M` : 1000
 
-### Basic decimal pattern
-
-The numbers from 1 to 10 are
-expressed in Roman numerals as follows:
+The numbers from 1 to 10 are expressed in Roman numerals as follows:
 
     I, II, III, IV, V, VI, VII, VIII, IX, X.
 
@@ -29,8 +26,8 @@ and the numeral for 9 is represented with `IX` (one less than 10) instead
 of `VIIII`. This feature of Roman numerals is called *subtractive notation*.
 
 The system being basically decimal, tens and hundreds follow the same pattern:
-10 to 100 are counted in tens, with `X` taking the place of `I`, `L` taking the place
-of `V` and `C` taking the place of `X`:
+10 to 100 are counted in tens, with `X` taking the place of `I`, `L` taking the
+place of `V` and `C` taking the place of `X`:
 
     X, XX, XXX, XL, L, LX, LXX, LXXX, XC, C.
 

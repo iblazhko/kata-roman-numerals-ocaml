@@ -1,13 +1,11 @@
 {
-    "name": "OCaml 5.0",
-    "image": "docker.io/iblazhko/ocaml-dev:5.0.0",
-    // Image above can be recreated with the included Dockerfile
-    // Note that is takes *long time* to build
-    // "dockerFile": "Dockerfile",
+    "name": "OCaml 5.1",
+    "image": "docker.io/iblazhko/ocaml-dev:5.1.0",
     "customizations": {
         "vscode": {
             "extensions": [
                 "ocamllabs.ocaml-platform",
+                "eamodio.gitlens",
                 "editorconfig.editorconfig",
                 "streetsidesoftware.code-spell-checker"
             ]

@@ -11,7 +11,7 @@ doc: "https://github.com/iblazhko/kata-roman-numerals-ocaml"
 bug-reports: "https://github.com/iblazhko/kata-roman-numerals-ocaml/issues"
 depends: [
   "ocaml"
-  "dune" {>= "3.8"}
+  "dune" {>= "3.12"}
   "odoc" {with-doc}
 ]
 build: [

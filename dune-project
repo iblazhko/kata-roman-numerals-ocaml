@@ -1,4 +1,4 @@
-(lang dune 3.8)
+(lang dune 3.12)
 
 (name kata_roman_numerals)
 

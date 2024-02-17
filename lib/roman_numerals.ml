@@ -25,11 +25,11 @@ let roman_buckets =
 let find_largest_full_bucket d =
   roman_buckets |> List.find (fun b -> b.size <= d)
 
-let rec append_buckets (numerals : string list) (reminder : int) =
-  if reminder <= 0 then numerals |> String.concat ""
+let rec append_buckets (numerals : string list) (remainder : int) =
+  if remainder <= 0 then numerals |> String.concat ""
   else
-    let b = find_largest_full_bucket reminder in
-    append_buckets (List.append numerals [ b.numerals ]) (reminder - b.size)
+    let b = find_largest_full_bucket remainder in
+    append_buckets (List.append numerals [ b.numerals ]) (remainder - b.size)
 
 exception OutOfRange of string
 
